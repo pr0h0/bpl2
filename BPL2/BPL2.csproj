@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="REPL\" />
+    <None Remove="Services\" />
+    <None Remove="Lexer\" />
+    <None Remove="Exceptions\" />
+    <None Remove="Parser\" />
+    <None Remove="Expr\" />
+    <None Remove="Interpreter\" />
+    <None Remove="Values\" />
+    <None Remove="Environment\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="REPL\" />
+    <Folder Include="Services\" />
+    <Folder Include="Lexer\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Parser\" />
+    <Folder Include="Expr\" />
+    <Folder Include="Interpreter\" />
+    <Folder Include="Values\" />
+    <Folder Include="Environment\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="examples\assignments.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\collatzConjecture.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\currying.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\failsafe.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\fibonacci.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\functions.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\guessTheNumber.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\helloWorld.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\loops.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\objects.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\primeNumber.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\STL.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\types.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\variables.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\test.bpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
