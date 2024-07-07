@@ -14,7 +14,7 @@ public class NullLiteralExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [null]";
+        return $"Exrepssion<{Type}> [null]";
     }
 }
 

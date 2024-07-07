@@ -1,4 +1,5 @@
-﻿using BPL2.Lexer;
+﻿using BPL2.Exceptions;
+using BPL2.Lexer;
 using BPL2.Parser;
 using BPL2.Services;
 using BPL2.Values;
@@ -22,7 +23,15 @@ public class VariableDeclarationStatementExpr : Expression
     public override RuntimeValue Interpret(Env.Environment env)
     {
         var value = Value.Interpret(env);
-        VariableService.ValidateVariableDeclaration(TypeOf, value);
+        Token? baseType = null;
+        try
+        {
+            var baseTypeValue = env.GetType(TypeOf.Value);
+            baseType = baseTypeValue.TypeOf;
+        }
+        catch (InterpreterException) { }
+
+        VariableService.ValidateVariableDeclaration(baseType ?? TypeOf, value);
         if (TypeOf.Value == "FUNC" && value is FunctionValue funValue)
         {
             env.DefineFunction(Name, TypeOf, funValue);
@@ -36,7 +45,7 @@ public class VariableDeclarationStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [{(IsConst ? "const" : "var")} {Name.Value} : {TypeOf.Value}]";
+        return $"Exrepssion<{Type}> [{(IsConst ? "const" : "var")} {Name.Value} : {TypeOf.Value}]";
     }
 
 }

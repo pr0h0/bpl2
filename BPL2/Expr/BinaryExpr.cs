@@ -33,8 +33,10 @@ public class BinaryExpr : Expression
         if (Operator.Type == TokenType.GreaterThanEqual) return EvaluateGreaterThanEqualOperator(env);
         if (Operator.Type == TokenType.LessThan) return EvaluateLessThanOperator(env);
         if (Operator.Type == TokenType.LessThanEqual) return EvaluateLessThanEqualOperator(env);
+        if (Operator.Type == TokenType.And) return EvaluateAndOperator(env);
+        if (Operator.Type == TokenType.Or) return EvaluateOrOperator(env);
 
-        throw new InterpreterException($"Operator not t implemented <{Operator.Type}|{Operator.Value}>");
+        throw new InterpreterException($"Operator not implemented <{Operator.Type}|{Operator.Value}>");
     }
 
     public override string ToString()
@@ -380,6 +382,48 @@ public class BinaryExpr : Expression
         if (leftType == "NUMBER")
         {
             return new NumberValue(((NumberValue)left).Value * ((NumberValue)right).Value);
+        }
+
+        throw new InterpreterException($"There is no defined behaviour for {Operator.Type} between {leftType} and {rightType}");
+    }
+
+    private RuntimeValue EvaluateAndOperator(Env.Environment env)
+    {
+        var left = Left.Interpret(env);
+        var right = Right.Interpret(env);
+
+        var leftType = left.Type();
+        var rightType = right.Type();
+
+        if (leftType != rightType)
+        {
+            throw new InterpreterException($"Different LHS and RHS types <{leftType}> <{Operator.Type}> <{rightType}>");
+        }
+
+        if (leftType == "BOOL")
+        {
+            return new BoolValue(((BoolValue)left).Value && ((BoolValue)right).Value);
+        }
+
+        throw new InterpreterException($"There is no defined behaviour for {Operator.Type} between {leftType} and {rightType}");
+    }
+
+    private RuntimeValue EvaluateOrOperator(Env.Environment env)
+    {
+        var left = Left.Interpret(env);
+        var right = Right.Interpret(env);
+
+        var leftType = left.Type();
+        var rightType = right.Type();
+
+        if (leftType != rightType)
+        {
+            throw new InterpreterException($"Different LHS and RHS types <{leftType}> <{Operator.Type}> <{rightType}>");
+        }
+
+        if (leftType == "BOOL")
+        {
+            return new BoolValue(((BoolValue)left).Value || ((BoolValue)right).Value);
         }
 
         throw new InterpreterException($"There is no defined behaviour for {Operator.Type} between {leftType} and {rightType}");

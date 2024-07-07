@@ -12,5 +12,5 @@ func fib(n: NUMBER): NUMBER {
 }
 
 for(var i: NUMBER = 1; i < 10; i++) {
-    print(`${i}:\t${fib(i)}`);
+    print(`${i}: ${fib(i)}`);
 }

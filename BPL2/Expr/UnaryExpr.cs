@@ -49,17 +49,42 @@ public class UnaryExpr : Expression
 
     private RuntimeValue InterpretIncrement()
     {
-        // TODO: Implement environment increment also
-        NumberValue? value = Value.Interpret(Env!) as NumberValue ?? throw new InterpreterException("Increment target is null??");
-        value.Value++;
+        NumberValue value = Value.Interpret(Env!) as NumberValue ?? throw new InterpreterException("Increment target is null??");
+
+        if (Value is IdentifierExpr identifierExpr)
+        {
+            var val = Env?.GetVariable(identifierExpr.Name);
+            if (val != null)
+            {
+                val.Value = new NumberValue(((NumberValue)val.Value).Value + 1);
+                Env?.SetValue(val.Name, val.Value);
+                return val.Value;
+            }
+        }
+        else
+        {
+            value.Value += 1;
+        }
         return value;
     }
 
     private RuntimeValue InterpretDecrement()
     {
-        // TODO: Implement environment decrement also
-        NumberValue? value = Value.Interpret(Env!) as NumberValue ?? throw new InterpreterException("Decrement target is null??");
-        value.Value--;
+        NumberValue value = Value.Interpret(Env!) as NumberValue ?? throw new InterpreterException("Decrement target is null??");
+        if (Value is IdentifierExpr identifierExpr)
+        {
+            var val = Env?.GetVariable(identifierExpr.Name);
+            if (val != null)
+            {
+                val.Value = new NumberValue(((NumberValue)val.Value).Value - 1);
+                Env?.SetValue(val.Name, val.Value);
+                return val.Value;
+            }
+        }
+        else
+        {
+            value.Value -= 1;
+        }
         return value;
     }
 

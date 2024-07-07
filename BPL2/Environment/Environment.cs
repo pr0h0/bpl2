@@ -63,11 +63,18 @@ public class Environment
         var variable = GetVariable(name.Value);
         if (variable.IsConst)
         {
-            throw new InterpreterException($"Variable {name.Value} is constant and can't br reassigned");
+            throw new InterpreterException($"Variable {name.Value} is constant and can't be reassigned");
         }
 
         variable.Value = value;
-        variables[name.Value].Value = value;
+        if (variables.ContainsKey(name.Value))
+        {
+            variables[name.Value].Value = value;
+        }
+        else
+        {
+            Parent?.SetValue(name, value);
+        }
 
 
         return variable;

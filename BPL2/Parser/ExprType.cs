@@ -42,5 +42,7 @@ public static class ExprType
     public static string TupleDeclarationExpr = "TUPLE_DECLARATION_EXPR";
 
     public static string STLFunctionExpr = "STL_FUNCTION_DECLARATION";
+
+    public static string ExitStatementExpr = "EXIT_STATEMENT_EXPR";
 }
 

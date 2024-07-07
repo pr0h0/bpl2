@@ -43,7 +43,7 @@ public class ArrayAccessExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [ARRAY ACCESS]";
+        return $"Exrepssion<{Type}> [ARRAY ACCESS]";
     }
 
     private RuntimeValue InterpretArrayAccess(RuntimeValue index, ArrayValue array)
@@ -55,7 +55,7 @@ public class ArrayAccessExpr : Expression
         var indexNumber = index as NumberValue;
 
         var arrValue = array.Value;
-        if (arrValue.Count > indexNumber?.Value)
+        if (arrValue.Count <= indexNumber?.Value)
         {
             throw new InterpreterException($"ARRAY index out of bounds, ARRAY length is {arrValue.Count} but got {indexNumber.Value}");
         }
@@ -71,7 +71,7 @@ public class ArrayAccessExpr : Expression
         var indexNumber = index as NumberValue;
 
         var arrValue = array.Value;
-        if (arrValue.Count > indexNumber?.Value)
+        if (arrValue.Count <= indexNumber?.Value)
         {
             throw new InterpreterException($"TUPLE index out of bounds, TUPLE length is {arrValue.Count} but got {indexNumber.Value}");
         }

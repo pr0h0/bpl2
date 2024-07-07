@@ -15,7 +15,7 @@ public class ContinueStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [CONTINUE]";
+        return $"Exrepssion<{Type}> [CONTINUE]";
     }
 }
 

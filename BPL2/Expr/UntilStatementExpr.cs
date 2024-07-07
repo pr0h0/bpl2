@@ -64,7 +64,7 @@ public class UntilStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [UNITL]";
+        return $"Exrepssion<{Type}> [UNITL]";
     }
 }
 

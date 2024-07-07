@@ -69,7 +69,7 @@ public class ForStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [FOR]";
+        return $"Exrepssion<{Type}> [FOR]";
     }
 
 }

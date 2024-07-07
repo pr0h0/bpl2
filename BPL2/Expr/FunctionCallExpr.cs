@@ -38,7 +38,7 @@ public class FunctionCallExpr : Expression
             var type = arg.Item1;
             var name = arg.Item2;
 
-            env.DefineVariable(type, new Token("", name, 0), args.ElementAt(index), false);
+            env.DefineVariable(type, Token.IDENTIFIER(name), args.ElementAt(index), false);
             index++;
         });
 
@@ -58,7 +58,7 @@ public class FunctionCallExpr : Expression
             var type = arg.Item1;
             var name = arg.Item2;
 
-            closureEnv.DefineVariable(type, new Token("", name, 0), args.ElementAt(index), false);
+            closureEnv.DefineVariable(type,  Token.IDENTIFIER( name), args.ElementAt(index), false);
             index++;
         });
 
@@ -72,7 +72,7 @@ public class FunctionCallExpr : Expression
             {
                 return ex.Value;
             }
-            throw ex;
+            throw new InterpreterException("Cannot return value from void function", this);
         }
     }
 }

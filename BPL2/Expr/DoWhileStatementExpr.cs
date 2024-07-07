@@ -60,7 +60,7 @@ public class DoWhileStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [OD WHILE]";
+        return $"Exrepssion<{Type}> [OD WHILE]";
     }
 }
 

@@ -24,7 +24,7 @@ public class BlockStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [BLOCK]";
+        return $"Exrepssion<{Type}> [BLOCK]";
     }
 }
 

@@ -3,6 +3,7 @@
 public class ArrayValue : RuntimeValue
 {
     public List<RuntimeValue> Value;
+
     public override string Type() => "ARRAY";
 
     public ArrayValue(List<RuntimeValue> value)

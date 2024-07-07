@@ -59,7 +59,7 @@ public class WhileStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [WHILE]";
+        return $"Exrepssion<{Type}> [WHILE]";
     }
 }
 

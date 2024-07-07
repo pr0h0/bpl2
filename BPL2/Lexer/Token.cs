@@ -18,6 +18,8 @@ namespace BPL2.Lexer
         {
             return $"Token<{Type}> [#{Line}] {Value}";
         }
+
+        public static Token IDENTIFIER(string name) => new Token("IDENTIFIER", name, 0);
     }
 }
 

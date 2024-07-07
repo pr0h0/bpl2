@@ -14,7 +14,7 @@ public class EmptyExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [EMPTY]";
+        return $"Exrepssion<{Type}> [EMPTY]";
     }
 }
 

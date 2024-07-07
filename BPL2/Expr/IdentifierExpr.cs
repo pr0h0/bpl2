@@ -33,7 +33,7 @@ public class IdentifierExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [{Name}]";
+        return $"Exrepssion<{Type}> [{Name}]";
     }
 }
 

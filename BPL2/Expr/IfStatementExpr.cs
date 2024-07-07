@@ -35,7 +35,7 @@ public class IfStatementExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [IF]";
+        return $"Exrepssion<{Type}> [IF]";
     }
 
 }

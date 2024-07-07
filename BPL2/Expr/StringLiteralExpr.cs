@@ -18,7 +18,7 @@ public class StringLiteralExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [{Value}]";
+        return $"Exrepssion<{Type}> [{Value}]";
     }
 }
 

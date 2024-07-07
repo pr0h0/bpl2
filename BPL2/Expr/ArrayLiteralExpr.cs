@@ -34,7 +34,7 @@ public class ArrayLiteralExpr : Expression
 
     public override string ToString()
     {
-        return $"Expr <{Type}> [ARRAY LITERAL]";
+        return $"Exrepssion<{Type}> [ARRAY LITERAL]";
     }
 }
 

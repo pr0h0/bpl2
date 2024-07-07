@@ -2,6 +2,7 @@
 using BPL2.Expr;
 using BPL2.Lexer;
 using BPL2.Services;
+using BPL2.Values;
 
 namespace BPL2.Parser;
 
@@ -69,7 +70,7 @@ public class Parser
             Consume(TokenType.Colon, "Expected \":\" after ternary expression");
             var elseBranch = ParseExpr();
 
-            expr = new IfStatementExpr(expr, thenBranch, elseBranch);
+            expr = new TernaryExpr(expr, thenBranch, elseBranch);
         }
 
         return expr;
@@ -281,6 +282,10 @@ public class Parser
                     return ParseTypeDeclaration();
                 }
 
+                if(expr.Value == "exit") {
+                    return parseExitStatement();
+                }
+
                 if (Seek(1)?.Type == TokenType.OpenParen) return ParseFunctionCall();
                 if (Seek(1)?.Type == TokenType.Dot) return ParseObjectAccess();
                 if (Seek(1)?.Type == TokenType.OpenBracket) return ParseArrayAccess();
@@ -319,7 +324,7 @@ public class Parser
         var name = Consume(TokenType.Identifier);
         Consume(TokenType.Dot);
         var field = Consume(TokenType.Identifier);
-        return new ObjectAccessExpr(name, new StringLiteralExpr(field.Value));
+        return new ObjectAccessExpr(name, field);
     }
 
     private Expression ParseTypeDeclaration()
@@ -367,10 +372,10 @@ public class Parser
         // TODO: Implement array declaration
         if (Math.Abs(1) == 1)
         {
-            LogService.Error("=============== Array declaration needs to be reworked ===============");
-            Thread.Sleep(3000);
-            return new NumberLiteralExpr("1");
-            //throw new NotImplementedException("Array declaration needs to be reworked");
+            throw new NotImplementedException("Array declaration needs to be reworked");
+            // LogService.Error("=============== Array declaration needs to be reworked ===============");
+            // Thread.Sleep(3000);
+            // return new NumberLiteralExpr("1");
         }
 
         return new TupleDeclarationExpr(name, new List<Token>() { type });
@@ -479,7 +484,7 @@ public class Parser
         Consume(TokenType.Identifier);
         var name =
             Optional(TokenType.Identifier) ??
-            new Token(TokenType.Identifier, $"anonymous_${Seek()?.Line}_${DateTime.Now.Ticks}_${new Random().NextInt64()}", 0);
+            Token.IDENTIFIER($"anonymous_${Seek()?.Line}_${DateTime.Now.Ticks}_${new Random().NextInt64()}");
         Consume(TokenType.OpenParen);
         List<Tuple<Token, string>> parameters = new();
         while (!IsEOF() && Seek()?.Type != TokenType.CloseParen)
@@ -492,7 +497,7 @@ public class Parser
         }
 
         Consume(TokenType.CloseParen, "Missing ) after function parameters");
-        var typeOf = new Token(TokenType.Identifier, "VOID", 0);
+        var typeOf = Token.IDENTIFIER("VOID");
         if (Seek()?.Type == TokenType.Colon)
         {
             Consume(TokenType.Colon, "Missing : after function parameters");
@@ -547,7 +552,7 @@ public class Parser
         Consume(TokenType.Assign, "Missing = after variable declaration");
         var value = Seek()?.Type == TokenType.OpenCurly ? ParseObjectLiteral() : ParseExpr();
 
-        return new VariableDeclarationStatementExpr(name, typeOf, value, type.Value == "var");
+        return new VariableDeclarationStatementExpr(name, typeOf, value, type.Value == "const");
     }
 
     private Expression ParseObjectLiteral()
@@ -638,6 +643,7 @@ public class Parser
             Consume(TokenType.OpenParen);
             var exceptionType = Consume(TokenType.Identifier);
             var variable = Consume(TokenType.Identifier);
+            Consume(TokenType.CloseParen);
 
             var catchBlock = ParseBlock() as Expression;
 
@@ -652,10 +658,29 @@ public class Parser
         Expression? finallyBlock = null;
         if (finallyIdentifier?.Value == "finally")
         {
+            Consume(TokenType.Identifier);
             finallyBlock = ParseBlock();
         }
 
         return new TryCatchStatementExpr(tryBlock, catchBlocks, finallyBlock);
+    }
+
+    private Expression parseExitStatement()
+    {
+        Consume(TokenType.Identifier);
+        Expression code = new NumberLiteralExpr("0");
+        Expression message = new StringLiteralExpr("");
+
+        if(Seek()?.Type == TokenType.OpenParen){
+            Optional(TokenType.OpenParen);
+            code = ParseExpr();
+            if(Seek()?.Type == TokenType.Comma) {
+                Consume(TokenType.Comma);
+                message = ParseExpr();
+            }
+            Consume(TokenType.CloseParen);
+        }
+        return new ExitStatementExpr(code, message);
     }
 
     private Token? Optional(string tokenType)
